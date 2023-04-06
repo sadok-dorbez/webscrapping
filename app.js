@@ -6,16 +6,20 @@ axios.get('https://www.somatra-get.com.tn/projets-en-cours.php')
     const html = response.data;
     const $ = cheerio.load(html);
 
-    $('article').each((i, article) => {
-      const title = $(article).find('h2 a').text().trim();
-      const link = $(article).find('h2 a').attr('href');
-      const description = $(article).find('.entry-content p').text().trim();
+    try {
+      $('div.blog-post').each((i, article) => {
+        const title = $(article).find('h3 a').text().trim();
+        const link = $(article).find('h3 a').attr('href');
+        const description = $(article).find('.wt-post-text').text().trim();
 
-      console.log(`Title: ${title}`);
-      console.log(`Link: ${link}`);
-      console.log(`Description: ${description}`);
-      console.log('----------------------');
-    });
+        console.log(`Title: ${title}`);
+        console.log(`Link: ${link}`);
+        console.log(`Description: ${description}`);
+        console.log('----------------------');
+      });
+    } catch (error) {
+      console.log(error);
+    }
   })
   .catch((error) => {
     console.log(error);
